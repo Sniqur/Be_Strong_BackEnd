@@ -47,7 +47,10 @@ stages:
         azureSubscription: 'Azure subscription 1(1a8f5438-2e23-4a1f-b53c-3ebf42a36c48)'
         appType: 'webAppContainer'
         WebAppName: 'BeStrongWebApp'
+        deployToSlotOrASE: true
         DockerNamespace: 'bestrongacr123.azurecr.io'
         DockerRepository: 'sniqurbestrongbackend'
         DockerImageTag: 'latest'
         StartupCommand: 'dotnet run'
+        
+
