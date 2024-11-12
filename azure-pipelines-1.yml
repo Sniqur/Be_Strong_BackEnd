@@ -47,6 +47,7 @@ resources:
 - repo: self
 
 variables:
+   
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'fac06dfc-11e7-4bd5-af2c-26c5c1b96556'
   imageRepository: 'sniqurbestrongbackend'
@@ -70,6 +71,14 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - task: Bash@3
+      displayName: "Azure Login"
+      inputs:
+        targetType: 'inline'
+        script: |
+                az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
+                az account set --subscription $(ARM_SUBSCRIPTION_ID)   
+ 
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
@@ -79,12 +88,6 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-
-    - script: |
-        az account show
-        az webapp list --resource-group $(resourceGroupName)
-        az webapp show --name $(appServiceName) --resource-group $(resourceGroupName)
-# displayName: 'Debug Azure Web App Access'
 
 
 # Stage 2: Deploy Docker Image to Azure Web App (Manual Approval Required)
