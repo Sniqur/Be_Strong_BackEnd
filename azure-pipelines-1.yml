@@ -4,6 +4,7 @@ trigger:
 resources:
 - repo: self
 
+
 variables:
    
   # Container registry service connection established during pipeline creation
@@ -11,7 +12,7 @@ variables:
   imageRepository: 'sniqurbestrongbackend'
   containerRegistry: 'bestrongacr123.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: 'latest'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -82,6 +83,6 @@ stages:
         ResourceGroupName: 'BeStrong-RG'
         DockerNamespace: 'bestrongacr123.azurecr.io'
         DockerRepository: 'sniqurbestrongbackend'
-        DockerImageTag: '$(Build.BuildId)'
+        DockerImageTag: 'latest'
         StartupCommand: 'dotnet SampleWebApiAspNetCore.dll'
         
