@@ -57,7 +57,7 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
   azureSubscription: 'backend_service_connection'
-  appServiceName: 'BeStrongWebApp'
+  appServiceName: 'BeStrongWebApp1'
   resourceGroupName: 'BeStrong-RG'
 
 stages:
@@ -108,4 +108,6 @@ stages:
         appName: $(appServiceName)
         resourceGroupName: $(resourceGroupName)
         imageName: $(containerRegistry)/$(imageRepository):$(tag)
+      
+  
 
