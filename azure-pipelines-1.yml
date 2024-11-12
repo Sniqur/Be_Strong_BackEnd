@@ -105,23 +105,6 @@ stages:
         notifyUsers: '<your-email@example.com>'
         instructions: 'Please approve to deploy the image to Azure Web App'
 
-  # - job: Deploy
-  #   displayName: Deploy Docker Image to Azure Web App
-  #   dependsOn: ManualApproval
-  #   pool:
-  #     vmImage: $(vmImageName)
-  #   steps:
-  #   - task: AzureWebAppContainer@1
-  #     displayName: Deploy image to Azure Web App
-  #     inputs:
-  #       azureSubscription: $(azureSubscription)
-  #       appName: $(appServiceName)
-  #       resourceGroupName: $(resourceGroupName)
-  #       imageName: $(containerRegistry)/$(imageRepository):$(tag)
-      
-  
-
-
 
   - job: Deploy
     displayName: Deploy Docker Image to Azure Web App
@@ -139,5 +122,5 @@ stages:
         ResourceGroupName: 'BeStrong-RG'
         DockerNamespace: 'bestrongacr123'
         DockerRepository: 'sniqurbestrongbackend'
-        DockerImageTag: 'latest'
+        DockerImageTag: '$(Build.BuildId)'
         StartupCommand: 'dotnet SampleWebApiAspNetCore.dll'
