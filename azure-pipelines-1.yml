@@ -80,6 +80,13 @@ stages:
         tags: |
           $(tag)
 
+    - script: |
+        az account show
+        az webapp list --resource-group $(resourceGroupName)
+        az webapp show --name $(appServiceName) --resource-group $(resourceGroupName)
+# displayName: 'Debug Azure Web App Access'
+
+
 # Stage 2: Deploy Docker Image to Azure Web App (Manual Approval Required)
 - stage: Deploy
   displayName: Deploy to Azure Web App
