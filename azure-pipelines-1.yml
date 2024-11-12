@@ -38,6 +38,14 @@ stages:
                 az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
                 az account set --subscription $(ARM_SUBSCRIPTION_ID)   
     
+    - task: Bash@3
+      displayName: 'Docker Login to ACR'
+      inputs:
+        targetType: 'inline'
+        script: |
+            echo "Logging in to Azure Container Registry..."
+            docker login $(containerRegistry) -u $(ACR_USERNAME) -p $(ACR_PASSWORD)
+
 
     - task: Docker@2
       displayName: Build and push an image to container registry
