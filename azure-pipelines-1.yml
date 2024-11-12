@@ -1,8 +1,8 @@
-trigger:
-- main
+# trigger:
+# - main
 
-resources:
-- repo: self
+# resources:
+# - repo: self
 
 
 variables:
