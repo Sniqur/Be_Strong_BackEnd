@@ -12,5 +12,8 @@ namespace SampleWebApiAspNetCore.Controllers.v2
         {
             return Ok("2.0");
         }
+
+      
     }
 }
+

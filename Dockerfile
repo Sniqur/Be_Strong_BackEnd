@@ -1,7 +1,6 @@
 # Stage 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
-EXPOSE 80
 
 
 
@@ -26,9 +25,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /out .
 
-# Expose port 5000 for the web API
-EXPOSE 5000
-
+# Expose port 80 for the web API
+EXPOSE 80
 # Start the web application
 ENTRYPOINT ["dotnet", "SampleWebApiAspNetCore.dll"]
 

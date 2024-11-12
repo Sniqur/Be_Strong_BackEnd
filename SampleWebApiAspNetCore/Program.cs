@@ -44,7 +44,6 @@ builder.Services.AddAutoMapper(typeof(FoodMappings));
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello, world!");
 
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
@@ -78,4 +77,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://0.0.0.0:80");
+app.Run();
