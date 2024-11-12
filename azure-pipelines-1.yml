@@ -1,6 +1,44 @@
-# Docker
-# Build and push an image to Azure Container Registry
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+# # Docker
+# # Build and push an image to Azure Container Registry
+# # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+# trigger:
+# - main
+
+# resources:
+# - repo: self
+
+# variables:
+#   # Container registry service connection established during pipeline creation
+#   dockerRegistryServiceConnection: 'fac06dfc-11e7-4bd5-af2c-26c5c1b96556'
+#   imageRepository: 'sniqurbestrongbackend'
+#   containerRegistry: 'bestrongacr123.azurecr.io'
+#   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+#   tag: '$(Build.BuildId)'
+
+#   # Agent VM image name
+#   vmImageName: 'ubuntu-latest'
+
+# stages:
+# - stage: Build
+#   displayName: Build and push stage
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     pool:
+#       vmImage: $(vmImageName)
+#     steps:
+#     - task: Docker@2
+#       displayName: Build and push an image to container registry
+#       inputs:
+#         command: buildAndPush
+#         repository: $(imageRepository)
+#         dockerfile: $(dockerfilePath)
+#         containerRegistry: $(dockerRegistryServiceConnection)
+#         tags: |
+#           $(tag)
+
+
 
 trigger:
 - main
@@ -18,13 +56,17 @@ variables:
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+  azureSubscription: 'backend_service_connection'
+  appServiceName: 'BeStrongWebApp'
+  resourceGroupName: 'BeStrong-RG'
 
 stages:
+# Stage 1: Build and Push Docker Image to ACR
 - stage: Build
   displayName: Build and push stage
   jobs:
   - job: Build
-    displayName: Build
+    displayName: Build Docker Image and Push to ACR
     pool:
       vmImage: $(vmImageName)
     steps:
@@ -37,3 +79,33 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+# Stage 2: Deploy Docker Image to Azure Web App (Manual Approval Required)
+- stage: Deploy
+  displayName: Deploy to Azure Web App
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - job: ManualApproval
+    displayName: Await manual approval
+    pool: server
+    steps:
+    - task: ManualValidation@0
+      inputs:
+        notifyUsers: '<your-email@example.com>'
+        instructions: 'Please approve to deploy the image to Azure Web App'
+
+  - job: Deploy
+    displayName: Deploy Docker Image to Azure Web App
+    dependsOn: ManualApproval
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: AzureWebAppContainer@1
+      displayName: Deploy image to Azure Web App
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appName: $(appServiceName)
+        resourceGroupName: $(resourceGroupName)
+        imageName: $(containerRegistry)/$(imageRepository):$(tag)
+
