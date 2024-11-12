@@ -50,4 +50,4 @@ stages:
         DockerNamespace: 'bestrongacr123.azurecr.io'
         DockerRepository: 'sniqurbestrongbackend'
         DockerImageTag: 'latest'
-        StartupCommand: 'dotnet SampleWebApiAspNetCore.dll'
+        StartupCommand: 'dotnet run'
