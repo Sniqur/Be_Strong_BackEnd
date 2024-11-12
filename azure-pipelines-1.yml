@@ -140,4 +140,4 @@ stages:
         DockerNamespace: 'bestrongacr123'
         DockerRepository: 'sniqurbestrongbackend'
         DockerImageTag: 'latest'
-        StartupCommand: 'dotnet run'
+        StartupCommand: 'dotnet SampleWebApiAspNetCore.dll'
