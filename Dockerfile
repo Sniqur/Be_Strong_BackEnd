@@ -26,7 +26,7 @@ WORKDIR /app
 COPY --from=build /out .
 
 # Expose port 80 for the web API
-EXPOSE 8080
+EXPOSE 80
 # Start the web application
 ENTRYPOINT ["dotnet", "SampleWebApiAspNetCore.dll"]
 
