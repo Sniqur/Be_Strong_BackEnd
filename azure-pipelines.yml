@@ -1,0 +1,64 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - "*"
+
+variables:
+  azureSubscription: 'Azure subscription 1(4)(1a8f5438-2e23-4a1f-b53c-3ebf42a36c48)'
+  appName: 'bestorngWebApp'
+  imageRepository: 'sniqurbestrongbackend'
+  containerRegistry: 'bestrongregistry.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build_Push
+  displayName: "Build and push into ACR stage"
+  jobs:
+  - job: Build
+    displayName: Build Docker Image
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+
+    - task: AzureCLI@2
+      displayName: 'Login to Azure Container Registry'
+      inputs:
+        azureSubscription: $(azureSubscription)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az acr login -n $(ACR_NAME)
+
+    - script: |
+        docker build -f $(dockerfilePath) -t $(containerRegistry)/$(imageRepository):$(tag) .
+        docker push $(containerRegistry)/$(imageRepository):$(tag)
+      displayName: 'Build and Push Docker Image'
+
+- stage: Deploy
+  displayName: "Deploy to App Service"
+  dependsOn: Build_Push
+  condition: succeeded()
+  jobs:
+    - deployment: DeployToAzure
+      displayName: "Deploy to Azure App Service"
+      environment: "production"
+      pool:
+        vmImage: 'ubuntu-latest'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: AzureWebAppContainer@1
+              displayName: 'Deploy Docker Image to Azure Web App'
+              inputs:
+                azureSubscription: $(azureSubscription)
+                appName: $(appName)
+                containers: $(containerRegistry)/$(imageRepository):$(tag)
