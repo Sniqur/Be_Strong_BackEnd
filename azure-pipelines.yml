@@ -15,6 +15,7 @@ variables:
   containerRegistry: 'bestrongregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
+  ACR_NAME: 'bestrongregistry'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -37,6 +38,14 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+    - task: AzureCLI@2
+      inputs:
+                        azureSubscription: 'Azure subscription 1(1)(1a8f5438-2e23-4a1f-b53c-3ebf42a36c48)'
+                        scriptType: 'bash'
+                        scriptLocation: 'inlineScript'
+                        inlineScript: |
+                          az acr login --name $(ACR_NAME)
 
     - task: AzureWebAppContainer@1
       inputs:
