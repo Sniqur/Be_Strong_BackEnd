@@ -26,7 +26,11 @@ WORKDIR /app
 COPY --from=build /out .
 
 # Expose port 80 for the web API
-EXPOSE 80
+# EXPOSE 80
+EXPOSE 5001
+
+ENV ASPNETCORE_URLS=http://+:5001
+ENV ASPNETCORE_ENVIRONMENT=Development
 # Start the web application
 ENTRYPOINT ["dotnet", "SampleWebApiAspNetCore.dll"]
 

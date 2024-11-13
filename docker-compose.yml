@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "29435:80"
+      - "5001:5001"
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-
+      - ASPNETCORE_ENVIRONMENT: Development
+      - ASPNETCORE_URLS=http://+:5001
