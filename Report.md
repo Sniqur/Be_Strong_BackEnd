@@ -34,6 +34,7 @@
 
    ![Image 5](./images/DepCheckLocalCompose.png)
 
+## Stage 2: Deploying
 
 ## Azure CI/CD Pipeline
 
