@@ -17,6 +17,7 @@ variables:
   containerRegistry: 'bestrongregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
+  
   ACR_NAME: 'bestrongregistry'
 
   # Agent VM image name
