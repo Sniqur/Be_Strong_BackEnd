@@ -22,15 +22,15 @@
 - **Docker Desktop**  
   ![Image 3](./images/DockDeskApprove.png)
 
-- **Browsing localhost:5001/swagger**  
+- **Browsing localhost:5001/swagger/index.html**  
   ![Image 4](./images/DepCheckLocal.png)
 
 
-- **docker-compose Check**
+- **Docker-compose Check**
    ![Image 4](./images/DockCompBuild.png)
 
 
-- **Browsing localhost:5001/swagger (docker-compose)**  
+- **Browsing localhost:5001/swagger/index.html (docker-compose)**  
 
    ![Image 5](./images/DepCheckLocalCompose.png)
 
