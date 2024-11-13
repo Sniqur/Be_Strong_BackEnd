@@ -78,9 +78,9 @@ variables:
   tag: '$(Build.BuildId)'
 
   # ACR details
-  ACR_NAME: $(ACR_NAME)
-  ACR_USERNAME: $(ACR_USERNAME)
-  ACR_PASSWORD: $(ACR_PASSWORD)
+  # ACR_NAME: $(ACR_NAME)
+  # ACR_USERNAME: $(ACR_USERNAME)
+  # ACR_PASSWORD: $(ACR_PASSWORD)
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
