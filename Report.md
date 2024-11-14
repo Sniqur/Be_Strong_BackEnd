@@ -36,6 +36,12 @@
 
 ## Stage 2: Deploying
 
+
+**My infarstructure I used while doing this task is being stored in `terraform` folder**
+
+
+
+
 ## Azure CI/CD Pipeline
 
 **Pipeline file**:  `azure-pipelines.yml`. 
