@@ -1,10 +1,13 @@
 # Configure the Azure provider
 provider "azurerm" {
   features {}
-    subscription_id = "1a8f5438-2e23-4a1f-b53c-3ebf42a36c48"
-
+    subscription_id = var.subID #Use your Subscription ID
+    
 }
 
+variable "subID" {
+  type = string
+}
 # Variables (you can also define these in a variables.tf file)
 variable "resource_group_name" {
   default = "BeStrong-RG"
