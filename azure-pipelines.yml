@@ -18,6 +18,7 @@ variables:
 
   vmImageName: 'ubuntu-latest'
 
+
 stages:
 - stage: Build_Push
   displayName: "Build and push into ACR stage"
